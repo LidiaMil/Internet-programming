@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <title>numb-1</title>
+  <style type="text/css">
+   .header { background: #D5BAE4; text-align: center;}
+   .layout { overflow: hidden; }
+   @media screen and (min-width: 600px){
+     .col1 { background: #C7E3E4; width: 40%; float: left; font-family: 'Tangerine', serif;}
+     .col2 { background: #E0D2C7; margin: 0 200px 0 40%; font-family: 'Tangerine', serif;}
+     .col3 { background: #ECD5DE; width: 200px; float: right; font-family: 'Tangerine', serif;}
+   }
+   @media screen and (max-width: 600px){
+      .col1 { background: #ccc; width: 100%;  font-family: 'Tangerine', serif;}       
+      .col2 { display: none; }
+      .col3 { display: none; } 
+   }
+  </style>
+ </head>
+ <body>
+  <div class="header">the task 1(адаптив)</div>
+  <div class="layout">
+   <div class="col1">column 1</div>
+   <div class="col3">column 3</div>
+   <div class="col2">column 2</div>
+  </div>
+ </body>
+</html>
