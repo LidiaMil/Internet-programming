@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Трёхколоночный макет</title>
+     
+        <style>
+            html {
+                height: 100%;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+           
+            #main_cont {
+                display:flex;
+                flex-direction: row;
+                background-color: #ededed;
+                padding: 5px;
+                min-width: 400px;
+                flex: 1 0 auto;
+            }
+            #main_cont div {
+                margin:7px;
+                border-radius: 5px;
+                padding:5px;
+                flex: 1 1 100px;
+                height: 150px;
+            }
+            div#f1 {
+                flex: 0 0 200px;
+                background: #EB83DB;
+            }
+            
+            div#f2 {
+                background: #02E8D9;
+                min-width: 160px;
+            }
+            div#f3 {
+                flex: 0 0 20%;
+                background: #E8C21A;
+            }
+            
+            @media screen and (max-width: 600px) {
+                #main_cont {
+                    flex-direction: column;
+                }
+                #main_cont div {
+                    flex: 0 0 200px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="main_cont">
+            <div id="f1">Колонка 1</div>
+            <div id="f2"><b>Колонка 2</b></div>
+            <div id="f3">Колонка 3</div>
+        </div>
+
+    </body>
+</html>
