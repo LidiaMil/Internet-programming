@@ -1,66 +1,82 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+
+<head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Задание 2</title>
-        <style>
-body {
-font-family: 'Pacifico', cursive;
-}
-</style>
-        <style type="text/css">
-            
-            .header, .footer {
-                background: #D5BAE4;
-            }
-            /*.layout {
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Задание 2</title>
+    <style>
+        body {
+            font-family: 'Pacifico', cursive;
+        }
+    </style>
+    <style type="text/css">
+        .header,
+        .footer {
+            background: #D5BAE4;
+        }
+
+        /*.layout {
                 overflow: hidden;
             }*/
+        .col1 {
+            background: #C7E3E4;
+            float: left;
+            width: 200px;
+        }
+
+        .col2 {
+            background: #E0D2C7;
+            margin: 0 20% 0 200px;
+            /* Отступ справа и слева */
+        }
+
+        .col3 {
+            background: #ECD5DE;
+            width: 20%;
+            float: right;
+        }
+
+        @media screen and (max-width: 600px) {
+
+            .layout {
+                display: flex;
+                flex-flow: wrap;
+            }
+
+            .layout div {
+                width: 100%;
+                height: 50px;
+            }
+
+
+
             .col1 {
-                background: #C7E3E4;
-                float: left;
-                width: 200px;
+                order: 1;
             }
+
             .col2 {
-                background: #E0D2C7;
-                margin: 0 20% 0 200px; /* Отступ справа и слева */
+                margin: 0;
+                order: 2;
             }
+
             .col3 {
-                background: #ECD5DE;
-                width: 20%;
-                float: right;
+                order: 3;
             }
-            @media screen and (max-width: 600px) {
-                .layout {
-                    display: flex;
-                    flex-flow: wrap;
-                }
-                .layout div{
-                     width: 100%;
-                     height: 50px;
-                }
-                .col1 {
-                    order: 1;
-                }
-                .col2 {
-                    margin: 0;
-                    order: 2;
-                }
-                .col3 {
-                    order: 3;
-                } 
-            }
-        </style>
-    </head>
-    <body>
-        <div class="layout">
-            <div class="col1">Колонка 1</div>
-            <div class="col3">Колонка 3</div>
-            <div class="col2">Колонка 2</div>
-        </div>
-    </body>
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <div class="col1">Колонка 1</div>
+        <div class="col3">Колонка 3</div>
+        <div class="col2">Колонка 2</div>
+    </div>
+</body>
+
 </html>
