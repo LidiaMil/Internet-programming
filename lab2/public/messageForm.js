@@ -1,11 +1,21 @@
 function alertCookie() {
-    // alert(docCookies.keys());
     alert(document.cookie);
 }
 
 function validatePhone(phone){
     let regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
     return regex.test(phone);
+}
+
+function CookiesDelete() {
+	var cookies = document.cookie.split(";");
+	for (var i = 0; i < cookies.length; i++) {
+		var cookie = cookies[i];
+		var eqPos = cookie.indexOf("=");
+		var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+		document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+		document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	}
 }
 
 document.getElementById('messageForm').addEventListener('submit', function (e) {
@@ -18,23 +28,24 @@ document.getElementById('messageForm').addEventListener('submit', function (e) {
             console.log('не соответствует 0 и 2 галочка');
         }
     }
+    for ( let i =0; i< 3; i++){
+        document.cookie = `answers-${i}=${ checkboxElems[i].checked}`;
+    }
     for (var q=0; q<inps.length; ++q) {
         if( inps[q].name == "phone") {
             if (!validatePhone(inps[q].value)){
-                // docCookies.setItem("phone", inps[q].value, 864e2, "/");
                 document.cookie = `phone=${inps[q].value}`;
-              console.log('phone Не соответствует');
+                console.log('phone Не соответствует');
             }else{
-              console.log('phone Соответствует');
+                console.log('phone Соответствует');
             }
         }
         if( inps[q].name == "message") {
             document.cookie = `message=${inps[q].value}`;
-            // docCookies.setItem("message", inps[q].value, 864e2, "/");
             if (inps[q].value.length >=5 && inps[q].value.length <= 2000){
                 console.log('message Соответствует');
             }else{
-                  console.log('message Не соответствует');
+                console.log('message Не соответствует');
             }
         }
     }
