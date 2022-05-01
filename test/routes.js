@@ -7,19 +7,19 @@ module.exports = function(app,io){
 	});
 
 	app.get('/create', function(req,res){
-
 		var id = Math.round((Math.random() * 1000000));
-
+		console.log(id,'create')
+		
 		res.redirect('/chat/'+id);
 	});
 
 	app.get('/chat/:id', function(req,res){
+		console.log('chat')
 
 		res.render('chat');
 	});
 
 	var chat = io.on('connection', function (socket) {
-
 		socket.on('load',function(data){
 
 			var room = findClientsSocket(io,data);
@@ -27,7 +27,7 @@ module.exports = function(app,io){
 
 				socket.emit('peopleinchat', {number: 0});
 			}
-			else if(room.length === 1) {
+			else if(room.length > 0) {
 
 				socket.emit('peopleinchat', {
 					number: 1,
@@ -47,7 +47,7 @@ module.exports = function(app,io){
 			var room = findClientsSocket(io, data.id);
 
 			if (room.length < 10) {
-
+				console.log(data.user,"1 data.user")
 				socket.username = data.user;
 				socket.room = data.id;
 				socket.avatar = gravatar.url(data.avatar, {s: '140', r: 'x', d: 'mm'});
@@ -57,7 +57,8 @@ module.exports = function(app,io){
 
 				socket.join(data.id);
 
-				if (room.length == 1) {
+				if (room.length > 0 ) {
+					console.log(data.user, room[0].username, "2 data.user")
 
 					var usernames = [],
 						avatars = [];

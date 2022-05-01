@@ -1,9 +1,11 @@
-var crypto = require("crypto");
+// This file is executed in the browser, when people visit /chat/<random id>
 
 $(function(){
 
 	var id = Number(window.location.pathname.match(/\/chat\/(\d+)$/)[1]);
+
 	var socket = io();
+	
 	var name = "",
 		img = "",
 		friend = "";
@@ -43,7 +45,7 @@ $(function(){
 	});
 
 	socket.on('peopleinchat', function(data){
-		console.log(data,'------------------')
+        console.log('data.number: ' + data.number);
 		if(data.number === 0){
 
 			showMessage("connected");
@@ -58,10 +60,14 @@ $(function(){
 					alert("Please enter a nick name longer than 1 character!");
 					return;
 				}
+
+				showMessage("inviteSomebody");
+				socket.emit('login', {user: name, avatar: name, id: id});
+			
 			});
 		}
 
-		else if(data.number === 1) {
+		else if(data.number > 0) {
 
 			showMessage("personinchat",data);
 
@@ -72,17 +78,19 @@ $(function(){
 				name = $.trim(hisName.val());
 
 				if(name.length < 1){
-					name = rundomName();
-					alert("Your name in this chat: ", name);
+					alert("Please enter a nick name longer than 1 character!");
 					return;
 				}
+
+			    console.log(data.user, 'data.users-------', name)
 
 				if(name == data.user){
-					name = rundomName();
-					alert("Your name in this chat: ", name);
+					alert("There already is a \"" + name + "\" in this room!");
+				    socket.emit('login', {user: (Math.random() + 1).toString(36).substring(7), avatar: name, id: id});
+
 					return;
 				}
-
+				socket.emit('login', {user: name, avatar: name, id: id});
 			});
 		}
 
@@ -92,14 +100,11 @@ $(function(){
 
 	});
 
-	// Other useful 
-
 	socket.on('startChat', function(data){
-		console.log(data);
 		if(data.boolean && data.id == id) {
 
 			chats.empty();
-
+			console.log(data.users, 'data.users', name)
 			if(name === data.users[0]) {
 
 				showMessage("youStartedChatWithNoMessages",data);
@@ -156,7 +161,6 @@ $(function(){
 
 		e.preventDefault();
 
-		// Create a new chat message and display it directly
 
 		showMessage("chatStarted");
 
@@ -164,15 +168,11 @@ $(function(){
 			createChatMessage(textarea.val(), name, img, moment());
 			scrollToBottom();
 
-			// Send the message to the other person in the chat
 			socket.emit('msg', {msg: textarea.val(), user: name, img: img});
 
 		}
-		// Empty the textarea
 		textarea.val("");
 	});
-
-	// Update the relative time stamps on the chat messages every minute
 
 	setInterval(function(){
 
@@ -183,12 +183,10 @@ $(function(){
 
 	},60000);
 
-	// Function that creates a new chat message
 
 	function createChatMessage(msg,user,imgg,now){
 
 		var who = '';
-
 		if(user===name) {
 			who = 'me';
 		}
@@ -206,7 +204,6 @@ $(function(){
 				'<p></p>' +
 			'</li>');
 
-		// use the 'text' method to escape malicious user input
 		li.find('p').text(msg);
 		li.find('b').text(user);
 
@@ -220,14 +217,8 @@ $(function(){
 		$("html, body").animate({ scrollTop: $(document).height()-$(window).height() },1000);
 	}
 
-	function isValid(thatemail) {
-
-		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(thatemail);
-	}
-
 	function showMessage(status,data){
-
+         console.log(status);
 		if(status === "connected"){
 
 			section.children().css('display', 'none');
@@ -236,7 +227,6 @@ $(function(){
 
 		else if(status === "inviteSomebody"){
 
-			// Set the invite link content
 			$("#link").text(window.location.href);
 
 			onConnect.fadeOut(1200, function(){
@@ -301,7 +291,3 @@ $(function(){
 	}
 
 });
-
-function rundomName() {
-	return crypto.randomBytes(20).toString('hex');
-}
