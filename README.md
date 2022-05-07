@@ -1,2 +1,2 @@
 # Internet-programming
-laиы for Internet programming MIET-2022
+labs for Internet programming MIET-2022
